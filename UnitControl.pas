@@ -25,6 +25,8 @@ type
 
     function GetDistanceTo(x: Double; y: Double): Double; overload;
     function GetDistanceTo(otherUnit: TUnit): Double; overload;
+    function GetSquaredDistanceTo(x: Double; y: Double): Double; overload;
+    function GetSquaredDistanceTo(otherUnit: TUnit): Double; overload;
 
     destructor Destroy; override;
 
@@ -64,6 +66,16 @@ end;
 function TUnit.getDistanceTo(otherUnit: TUnit): Double;
 begin
   result := GetDistanceTo(otherUnit.FX, otherUnit.FY);
+end;
+
+function TUnit.getSquaredDistanceTo(x: Double; y: Double): Double;
+begin
+  result := Sqr(FX - x) + Sqr(FY - y);
+end;
+
+function TUnit.getSquaredDistanceTo(otherUnit: TUnit): Double;
+begin
+  result := GetSquaredDistanceTo(otherUnit.FX, otherUnit.FY);
 end;
 
 destructor TUnit.Destroy;
