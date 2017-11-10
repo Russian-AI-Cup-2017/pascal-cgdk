@@ -16,8 +16,9 @@ const
   ACTION_DISBAND                 : LongInt = 6;
   ACTION_MOVE                    : LongInt = 7;
   ACTION_ROTATE                  : LongInt = 8;
-  ACTION_SETUP_VEHICLE_PRODUCTION: LongInt = 9;
-  _ACTION_COUNT_                 : LongInt = 10;
+  ACTION_SCALE                   : LongInt = 9;
+  ACTION_SETUP_VEHICLE_PRODUCTION: LongInt = 10;
+  _ACTION_COUNT_                 : LongInt = 11;
 
 type
   TActionType = LongInt;

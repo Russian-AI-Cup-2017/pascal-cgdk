@@ -17,6 +17,7 @@ type
     FX: Double;
     FY: Double;
     FAngle: Double;
+    FFactor: Double;
     FMaxSpeed: Double;
     FMaxAngularSpeed: Double;
     FVehicleType: TVehicleType;
@@ -52,6 +53,9 @@ type
     function GetAngle: Double;
     procedure SetAngle(angle: Double);
     property Angle: Double read GetAngle write SetAngle;
+    function GetFactor: Double;
+    procedure SetFactor(factor: Double);
+    property Factor: Double read GetFactor write SetFactor;
     function GetMaxSpeed: Double;
     procedure SetMaxSpeed(maxSpeed: Double);
     property MaxSpeed: Double read GetMaxSpeed write SetMaxSpeed;
@@ -84,6 +88,7 @@ begin
   FX := 0.0;
   FY := 0.0;
   FAngle := 0.0;
+  FFactor := 0.0;
   FMaxSpeed := 0.0;
   FMaxAngularSpeed := 0.0;
   FVehicleType := _VEHICLE_UNKNOWN_;
@@ -178,6 +183,16 @@ end;
 procedure TMove.SetAngle(angle: Double);
 begin
   FAngle := angle;
+end;
+
+function TMove.GetFactor: Double;
+begin
+  result := FFactor;
+end;
+
+procedure TMove.SetFactor(factor: Double);
+begin
+  FFactor := factor;
 end;
 
 function TMove.GetMaxSpeed: Double;

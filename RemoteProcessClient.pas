@@ -155,7 +155,7 @@ end;
 procedure TRemoteProcessClient.WriteProtocolVersionMessage;
 begin
   WriteEnum(PROTOCOL_VERSION);
-  WriteInt(1);
+  WriteInt(2);
 end;
 
 function TRemoteProcessClient.ReadTeamSizeMessage: LongInt;
@@ -670,6 +670,7 @@ begin
   WriteDouble(move.X);
   WriteDouble(move.Y);
   WriteDouble(move.Angle);
+  WriteDouble(move.Factor);
   WriteDouble(move.MaxSpeed);
   WriteDouble(move.MaxAngularSpeed);
   WriteEnum(move.VehicleType);
