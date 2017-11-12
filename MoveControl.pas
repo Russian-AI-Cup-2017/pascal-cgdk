@@ -22,6 +22,7 @@ type
     FMaxAngularSpeed: Double;
     FVehicleType: TVehicleType;
     FFacilityId: Int64;
+    FVehicleId: Int64;
 
   public
     constructor Create;
@@ -68,6 +69,9 @@ type
     function GetFacilityId: Int64;
     procedure SetFacilityId(facilityId: Int64);
     property FacilityId: Int64 read GetFacilityId write SetFacilityId;
+    function GetVehicleId: Int64;
+    procedure SetVehicleId(vehicleId: Int64);
+    property VehicleId: Int64 read GetVehicleId write SetVehicleId;
 
     destructor Destroy; override;
 
@@ -93,6 +97,7 @@ begin
   FMaxAngularSpeed := 0.0;
   FVehicleType := _VEHICLE_UNKNOWN_;
   FFacilityId := -1;
+  FVehicleId := -1;
 end;
 
 function TMove.GetAction: TActionType;
@@ -233,6 +238,16 @@ end;
 procedure TMove.SetFacilityId(facilityId: Int64);
 begin
   FFacilityId := facilityId;
+end;
+
+function TMove.GetVehicleId: Int64;
+begin
+  result := FVehicleId;
+end;
+
+procedure TMove.SetVehicleId(vehicleId: Int64);
+begin
+  FVehicleId := vehicleId;
 end;
 
 destructor TMove.Destroy;

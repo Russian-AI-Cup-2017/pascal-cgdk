@@ -18,7 +18,8 @@ const
   ACTION_ROTATE                  : LongInt = 8;
   ACTION_SCALE                   : LongInt = 9;
   ACTION_SETUP_VEHICLE_PRODUCTION: LongInt = 10;
-  _ACTION_COUNT_                 : LongInt = 11;
+  ACTION_TACTICAL_NUCLEAR_STRIKE : LongInt = 11;
+  _ACTION_COUNT_                 : LongInt = 12;
 
 type
   TActionType = LongInt;

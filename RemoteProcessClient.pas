@@ -155,7 +155,7 @@ end;
 procedure TRemoteProcessClient.WriteProtocolVersionMessage;
 begin
   WriteEnum(PROTOCOL_VERSION);
-  WriteInt(2);
+  WriteInt(3);
 end;
 
 function TRemoteProcessClient.ReadTeamSizeMessage: LongInt;
@@ -396,6 +396,11 @@ var
   facilityCapturePointsPerVehiclePerTick: Double;
   facilityWidth: Double;
   facilityHeight: Double;
+  baseTacticalNuclearStrikeCooldown: LongInt;
+  tacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt;
+  maxTacticalNuclearStrikeDamage: Double;
+  tacticalNuclearStrikeRadius: Double;
+  tacticalNuclearStrikeDelay: LongInt;
 
 begin
   if not ReadBoolean then begin
@@ -492,6 +497,11 @@ begin
   facilityCapturePointsPerVehiclePerTick := ReadDouble;
   facilityWidth := ReadDouble;
   facilityHeight := ReadDouble;
+  baseTacticalNuclearStrikeCooldown := ReadInt;
+  tacticalNuclearStrikeCooldownDecreasePerControlCenter := ReadInt;
+  maxTacticalNuclearStrikeDamage := ReadDouble;
+  tacticalNuclearStrikeRadius := ReadDouble;
+  tacticalNuclearStrikeDelay := ReadInt;
 
   result := TGame.Create(randomSeed, tickCount, worldWidth, worldHeight, fogOfWarEnabled, victoryScore,
     facilityCaptureScore, vehicleEliminationScore, actionDetectionInterval, baseActionCount,
@@ -511,7 +521,9 @@ begin
     helicopterProductionCost, fighterDurability, fighterSpeed, fighterVisionRange, fighterGroundAttackRange,
     fighterAerialAttackRange, fighterGroundDamage, fighterAerialDamage, fighterGroundDefence, fighterAerialDefence,
     fighterAttackCooldownTicks, fighterProductionCost, maxFacilityCapturePoints, facilityCapturePointsPerVehiclePerTick,
-    facilityWidth, facilityHeight);
+    facilityWidth, facilityHeight, baseTacticalNuclearStrikeCooldown,
+    tacticalNuclearStrikeCooldownDecreasePerControlCenter, maxTacticalNuclearStrikeDamage, tacticalNuclearStrikeRadius,
+    tacticalNuclearStrikeDelay);
 end;
 
 procedure TRemoteProcessClient.WriteGame(game: TGame);
@@ -612,6 +624,11 @@ begin
   WriteDouble(game.GetFacilityCapturePointsPerVehiclePerTick);
   WriteDouble(game.GetFacilityWidth);
   WriteDouble(game.GetFacilityHeight);
+  WriteInt(game.GetBaseTacticalNuclearStrikeCooldown);
+  WriteInt(game.GetTacticalNuclearStrikeCooldownDecreasePerControlCenter);
+  WriteDouble(game.GetMaxTacticalNuclearStrikeDamage);
+  WriteDouble(game.GetTacticalNuclearStrikeRadius);
+  WriteInt(game.GetTacticalNuclearStrikeDelay);
 end;
 
 function TRemoteProcessClient.ReadGames: TGameArray;
@@ -675,6 +692,7 @@ begin
   WriteDouble(move.MaxAngularSpeed);
   WriteEnum(move.VehicleType);
   WriteLong(move.FacilityId);
+  WriteLong(move.VehicleId);
 end;
 
 procedure TRemoteProcessClient.WriteMoves(moves: TMoveArray);
@@ -704,6 +722,11 @@ var
   strategyCrashed: Boolean;
   score: LongInt;
   remainingActionCooldownTicks: LongInt;
+  remainingNuclearStrikeCooldownTicks: LongInt;
+  nextNuclearStrikeVehicleId: Int64;
+  nextNuclearStrikeTickIndex: LongInt;
+  nextNuclearStrikeX: Double;
+  nextNuclearStrikeY: Double;
 
 begin
   flag := ReadByte;
@@ -723,12 +746,19 @@ begin
   strategyCrashed := ReadBoolean;
   score := ReadInt;
   remainingActionCooldownTicks := ReadInt;
+  remainingNuclearStrikeCooldownTicks := ReadInt;
+  nextNuclearStrikeVehicleId := ReadLong;
+  nextNuclearStrikeTickIndex := ReadInt;
+  nextNuclearStrikeX := ReadDouble;
+  nextNuclearStrikeY := ReadDouble;
 
   if Assigned(FPreviousPlayerById[id]) then begin
     FPreviousPlayerById[id].Free;
   end;
 
-  FPreviousPlayerById[id] := TPlayer.Create(id, me, strategyCrashed, score, remainingActionCooldownTicks);
+  FPreviousPlayerById[id] := TPlayer.Create(id, me, strategyCrashed, score, remainingActionCooldownTicks,
+    remainingNuclearStrikeCooldownTicks, nextNuclearStrikeVehicleId, nextNuclearStrikeTickIndex, nextNuclearStrikeX,
+    nextNuclearStrikeY);
 
   result := TPlayer.Create(FPreviousPlayerById[id]);
 end;
@@ -747,6 +777,11 @@ begin
   WriteBoolean(player.GetStrategyCrashed);
   WriteInt(player.GetScore);
   WriteInt(player.GetRemainingActionCooldownTicks);
+  WriteInt(player.GetRemainingNuclearStrikeCooldownTicks);
+  WriteLong(player.GetNextNuclearStrikeVehicleId);
+  WriteInt(player.GetNextNuclearStrikeTickIndex);
+  WriteDouble(player.GetNextNuclearStrikeX);
+  WriteDouble(player.GetNextNuclearStrikeY);
 end;
 
 function TRemoteProcessClient.ReadPlayers: TPlayerArray;

@@ -97,6 +97,11 @@ type
     FFacilityCapturePointsPerVehiclePerTick: Double;
     FFacilityWidth: Double;
     FFacilityHeight: Double;
+    FBaseTacticalNuclearStrikeCooldown: LongInt;
+    FTacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt;
+    FMaxTacticalNuclearStrikeDamage: Double;
+    FTacticalNuclearStrikeRadius: Double;
+    FTacticalNuclearStrikeDelay: LongInt;
 
   public
     constructor Create(const randomSeed: Int64; const tickCount: LongInt; const worldWidth: Double;
@@ -134,7 +139,11 @@ type
       const fighterGroundDamage: LongInt; const fighterAerialDamage: LongInt; const fighterGroundDefence: LongInt;
       const fighterAerialDefence: LongInt; const fighterAttackCooldownTicks: LongInt;
       const fighterProductionCost: LongInt; const maxFacilityCapturePoints: Double;
-      const facilityCapturePointsPerVehiclePerTick: Double; const facilityWidth: Double; const facilityHeight: Double);
+      const facilityCapturePointsPerVehiclePerTick: Double; const facilityWidth: Double; const facilityHeight: Double;
+      const baseTacticalNuclearStrikeCooldown: LongInt;
+      const tacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt;
+      const maxTacticalNuclearStrikeDamage: Double; const tacticalNuclearStrikeRadius: Double;
+      const tacticalNuclearStrikeDelay: LongInt);
 
     function GetRandomSeed: Int64;
     property RandomSeed: Int64 read GetRandomSeed;
@@ -314,6 +323,16 @@ type
     property FacilityWidth: Double read GetFacilityWidth;
     function GetFacilityHeight: Double;
     property FacilityHeight: Double read GetFacilityHeight;
+    function GetBaseTacticalNuclearStrikeCooldown: LongInt;
+    property BaseTacticalNuclearStrikeCooldown: LongInt read GetBaseTacticalNuclearStrikeCooldown;
+    function GetTacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt;
+    property TacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt read GetTacticalNuclearStrikeCooldownDecreasePerControlCenter;
+    function GetMaxTacticalNuclearStrikeDamage: Double;
+    property MaxTacticalNuclearStrikeDamage: Double read GetMaxTacticalNuclearStrikeDamage;
+    function GetTacticalNuclearStrikeRadius: Double;
+    property TacticalNuclearStrikeRadius: Double read GetTacticalNuclearStrikeRadius;
+    function GetTacticalNuclearStrikeDelay: LongInt;
+    property TacticalNuclearStrikeDelay: LongInt read GetTacticalNuclearStrikeDelay;
 
     destructor Destroy; override;
 
@@ -356,7 +375,9 @@ constructor TGame.Create(const randomSeed: Int64; const tickCount: LongInt; cons
   const fighterAerialDamage: LongInt; const fighterGroundDefence: LongInt; const fighterAerialDefence: LongInt;
   const fighterAttackCooldownTicks: LongInt; const fighterProductionCost: LongInt;
   const maxFacilityCapturePoints: Double; const facilityCapturePointsPerVehiclePerTick: Double;
-  const facilityWidth: Double; const facilityHeight: Double);
+  const facilityWidth: Double; const facilityHeight: Double; const baseTacticalNuclearStrikeCooldown: LongInt;
+  const tacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt; const maxTacticalNuclearStrikeDamage: Double;
+  const tacticalNuclearStrikeRadius: Double; const tacticalNuclearStrikeDelay: LongInt);
 begin
   FRandomSeed := randomSeed;
   FTickCount := tickCount;
@@ -447,6 +468,11 @@ begin
   FFacilityCapturePointsPerVehiclePerTick := facilityCapturePointsPerVehiclePerTick;
   FFacilityWidth := facilityWidth;
   FFacilityHeight := facilityHeight;
+  FBaseTacticalNuclearStrikeCooldown := baseTacticalNuclearStrikeCooldown;
+  FTacticalNuclearStrikeCooldownDecreasePerControlCenter := tacticalNuclearStrikeCooldownDecreasePerControlCenter;
+  FMaxTacticalNuclearStrikeDamage := maxTacticalNuclearStrikeDamage;
+  FTacticalNuclearStrikeRadius := tacticalNuclearStrikeRadius;
+  FTacticalNuclearStrikeDelay := tacticalNuclearStrikeDelay;
 end;
 
 function TGame.GetRandomSeed: Int64;
@@ -892,6 +918,31 @@ end;
 function TGame.GetFacilityHeight: Double;
 begin
   result := FFacilityHeight;
+end;
+
+function TGame.GetBaseTacticalNuclearStrikeCooldown: LongInt;
+begin
+  result := FBaseTacticalNuclearStrikeCooldown;
+end;
+
+function TGame.GetTacticalNuclearStrikeCooldownDecreasePerControlCenter: LongInt;
+begin
+  result := FTacticalNuclearStrikeCooldownDecreasePerControlCenter;
+end;
+
+function TGame.GetMaxTacticalNuclearStrikeDamage: Double;
+begin
+  result := FMaxTacticalNuclearStrikeDamage;
+end;
+
+function TGame.GetTacticalNuclearStrikeRadius: Double;
+begin
+  result := FTacticalNuclearStrikeRadius;
+end;
+
+function TGame.GetTacticalNuclearStrikeDelay: LongInt;
+begin
+  result := FTacticalNuclearStrikeDelay;
 end;
 
 destructor TGame.Destroy;
