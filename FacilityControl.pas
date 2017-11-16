@@ -62,7 +62,7 @@ begin
   FProductionProgress := productionProgress;
 end;
 
-constructor TFacility.Create(const facility: TFacility); overload;
+constructor TFacility.Create(const facility: TFacility);
 begin
   FId := facility.Id;
   FType := facility.FacilityType;
